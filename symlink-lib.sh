@@ -67,4 +67,4 @@ function symlink-lib {
   echo
 }
 
-symlink-lib "TEMPLATE-PATH"
+symlink-lib "test_bench/fixtures/compare_text"
