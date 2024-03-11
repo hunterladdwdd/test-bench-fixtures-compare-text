@@ -80,19 +80,42 @@ module FormatDiff
   end
 end
 
+module RunCommand
+  def run_command(command)
+    puts command
+    
+    `#{command}`
+  end
+end
+
+module ContextLines
+  def context_lines(compare_text, control_text)
+    compare_text_lines = compare_text.lines.count
+    control_text_lines = control_text.lines.count
+
+    context_lines = [compare_text_lines, control_text_lines].max
+  end
+end
+
 class GitDiff
   include WriteTempfile
   include FormatDiff
+  include RunCommand
+  include ContextLines
 
   def available?
     system('git --version', out: File::NULL)
   end
 
   def call(compare_text, control_text)
+    context_lines = context_lines(compare_text, control_text)
+
     compare_path = write_tempfile(compare_text)
     control_path = write_tempfile(control_text)
 
-    diff_output = `git diff --color --word-diff #{control_path} #{compare_path}`
+    diff_command = "git diff --unified=#{context_lines} --color --word-diff #{control_path} #{compare_path}"
+
+    diff_output = run_command(diff_command)
 
     format_diff(diff_output)
   end
@@ -102,16 +125,22 @@ test(GitDiff.new)
 class Diff
   include WriteTempfile
   include FormatDiff
+  include RunCommand
+  include ContextLines
 
   def available?
     system('diff --version', out: File::NULL)
   end
 
   def call(compare_text, control_text)
+    context_lines = context_lines(compare_text, control_text)
+
     compare_path = write_tempfile(compare_text)
     control_path = write_tempfile(control_text)
 
-    diff_output = `diff --color=always --unified #{control_path} #{compare_path}`
+    diff_command = "diff --color=always --unified=#{context_lines} #{control_path} #{compare_path}"
+
+    diff_output = run_command(diff_command)
 
     format_diff(diff_output)
   end
