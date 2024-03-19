@@ -54,8 +54,10 @@ TEXT
 
 
 module WriteTempfile
-  def write_tempfile(text)
-    tempfile = Tempfile.new
+  def write_tempfile(text, prefix)
+    prefix = "#{prefix}-"
+
+    tempfile = Tempfile.new(prefix)
     tempfile.write(text)
     tempfile.close
 
@@ -110,8 +112,8 @@ class GitDiff
   def call(compare_text, control_text)
     context_lines = context_lines(compare_text, control_text)
 
-    compare_path = write_tempfile(compare_text)
-    control_path = write_tempfile(control_text)
+    compare_path = write_tempfile(compare_text, 'compare')
+    control_path = write_tempfile(control_text, 'control')
 
     diff_command = "git diff --unified=#{context_lines} --color --word-diff #{control_path} #{compare_path}"
 
@@ -135,8 +137,8 @@ class Diff
   def call(compare_text, control_text)
     context_lines = context_lines(compare_text, control_text)
 
-    compare_path = write_tempfile(compare_text)
-    control_path = write_tempfile(control_text)
+    compare_path = write_tempfile(compare_text, 'compare')
+    control_path = write_tempfile(control_text, 'control')
 
     diff_command = "diff --color=always --unified=#{context_lines} #{control_path} #{compare_path}"
 
