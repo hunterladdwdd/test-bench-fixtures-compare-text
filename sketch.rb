@@ -53,7 +53,14 @@ Sketch
 TEXT
 
 
-module WriteTempfile
+module WriteTempfiles
+  def write_tempfiles(compare_text, control_text)
+    compare_path = write_tempfile(compare_text, 'compare')
+    control_path = write_tempfile(control_text, 'control')
+
+    [compare_path, control_path]
+  end
+
   def write_tempfile(text, prefix)
     prefix = "#{prefix}-"
 
@@ -100,7 +107,7 @@ module ContextLines
 end
 
 class GitDiff
-  include WriteTempfile
+  include WriteTempfiles
   include FormatDiff
   include RunCommand
   include ContextLines
@@ -112,8 +119,7 @@ class GitDiff
   def call(compare_text, control_text)
     context_lines = context_lines(compare_text, control_text)
 
-    compare_path = write_tempfile(compare_text, 'compare')
-    control_path = write_tempfile(control_text, 'control')
+    control_path, compare_path = write_tempfiles(compare_text, control_text)
 
     diff_command = "git diff --unified=#{context_lines} --color --word-diff #{control_path} #{compare_path}"
 
@@ -125,7 +131,7 @@ end
 test(GitDiff.new)
 
 class Diff
-  include WriteTempfile
+  include WriteTempfiles
   include FormatDiff
   include RunCommand
   include ContextLines
@@ -137,8 +143,7 @@ class Diff
   def call(compare_text, control_text)
     context_lines = context_lines(compare_text, control_text)
 
-    compare_path = write_tempfile(compare_text, 'compare')
-    control_path = write_tempfile(control_text, 'control')
+    control_path, compare_path = write_tempfiles(compare_text, control_text)
 
     diff_command = "diff --color=always --unified=#{context_lines} #{control_path} #{compare_path}"
 
