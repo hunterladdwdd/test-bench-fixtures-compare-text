@@ -74,16 +74,20 @@ end
 
 module FormatDiff
   def format_diff(diff_output)
-    lines = diff_output.each_line.to_a
+    raw_lines = diff_output.each_line.to_a
 
-    lines = lines.drop_while do |line|
+    lines = raw_lines.drop_while do |line|
       # Remove escape sequences
-      line = line.gsub(/\e\[(\d+)m/, '')
+      line.gsub!(/\e\[(\d+)m/, '')
 
       !line.start_with?('@@')
     end
+    lines.delete_at(0)
 
-    lines = lines[1..]
+    lines.map!.with_index(1) do |line, line_number|
+      line_number = line_number.to_s.rjust(4)
+      "#{line_number} \e[2m|\e[22m#{line}"
+    end
 
     lines.join
   end
