@@ -48,7 +48,7 @@ end
 
 puts <<~TEXT
 
-Sketch
+Diff Strategies
 = = =
 TEXT
 
