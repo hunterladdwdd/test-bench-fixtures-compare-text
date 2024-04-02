@@ -96,7 +96,7 @@ end
 module RunCommand
   def run_command(command)
     puts command
-    
+
     `#{command}`
   end
 end
@@ -106,7 +106,7 @@ module ContextLines
     compare_text_lines = compare_text.lines.count
     control_text_lines = control_text.lines.count
 
-    context_lines = [compare_text_lines, control_text_lines].max
+    [compare_text_lines, control_text_lines].max
   end
 end
 
