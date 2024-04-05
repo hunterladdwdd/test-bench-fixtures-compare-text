@@ -1,10 +1,3 @@
-require 'tempfile'
-
-## To Do
-# - git diff and diff must print out the entire document
-# - Review git diff and diff documentation and consider all arguments
-# - Review Ruby's ShellWords documentation and identify way to demonstrate the problem it solves
-
 def test(diff)
   puts <<~TEXT
 
