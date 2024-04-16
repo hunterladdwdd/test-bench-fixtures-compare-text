@@ -21,7 +21,12 @@ class CompareText
 
       formatted_diff = format_diff(diff_output)
 
-      comment formatted_diff
+      if formatted_diff.empty?
+        numbered_text = apply_numbering(compare_text)
+        detail numbered_text
+      else
+        detail formatted_diff
+      end
 
       test do
         assert(compare_text == control_text)
@@ -61,6 +66,12 @@ class CompareText
     end
     lines.delete_at(0)
 
+    text = lines.join
+    apply_numbering(text)
+  end
+
+  def apply_numbering(text)
+    lines = text.each_line.to_a
     number_of_lines = lines.length
     line_number_width = number_of_lines.to_s.length
 
