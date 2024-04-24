@@ -85,16 +85,16 @@ class CompareText
 end
 
 context "Compare Text Example" do
-  control_text = "Some text\nSome more text\nYet more text\n"
+  control_text = Controls::Text.example
 
   context "No Difference" do
-    compare_text = control_text.dup
+    compare_text = Controls::Text.example
 
     fixture(CompareText, compare_text, control_text)
   end
 
   context "Difference" do
-    compare_text = "Some text\nSome MORE text\nYet more text\n"
+    compare_text = Controls::Text::Different.example
 
     fixture(CompareText, compare_text, control_text)
   end
