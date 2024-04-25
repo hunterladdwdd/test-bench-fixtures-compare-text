@@ -88,13 +88,13 @@ context "Compare Text Example" do
   control_text = Controls::Text.example
 
   context "No Difference" do
-    compare_text = Controls::Text.example
+    compare_text = Controls::Text::NoDifference.example
 
     fixture(CompareText, compare_text, control_text)
   end
 
   context "Difference" do
-    compare_text = Controls::Text::Different.example
+    compare_text = Controls::Text::Difference.example
 
     fixture(CompareText, compare_text, control_text)
   end
