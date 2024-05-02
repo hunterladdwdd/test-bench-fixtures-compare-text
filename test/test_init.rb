@@ -4,6 +4,6 @@ require 'test_bench'; TestBench.activate
 
 require 'test_bench/fixtures/compare_text/controls'
 
-include TestBench
+include TestBench::Fixtures
 
-Controls = TestBench::Fixtures::CompareText::Controls rescue nil
+Controls = CompareText::Controls
