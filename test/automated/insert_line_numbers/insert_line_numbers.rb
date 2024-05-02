@@ -1,4 +1,4 @@
-require_relative 'automated_init'
+require_relative '../automated_init'
 
 context "Insert Line Numbers" do
   text = Controls::Text.example
