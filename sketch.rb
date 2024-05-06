@@ -77,7 +77,7 @@ class CompareText
 
     lines.map!.with_index(1) do |line, line_number|
       line_number = line_number.to_s.rjust(line_number_width)
-      "#{line_number} \e[2m|\e[22m#{line}"
+      "\e[2m#{line_number}\u00b7\e[22m#{line}"
     end
 
     lines.join
