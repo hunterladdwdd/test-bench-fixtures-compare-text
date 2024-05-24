@@ -3,6 +3,10 @@ module TestBench
     class CompareText
       module InsertLineNumbers
         def self.call(text, style: nil)
+          if style.nil?
+            style = true
+          end
+
           numbered_text = String.new
 
           text_lines = text.lines
