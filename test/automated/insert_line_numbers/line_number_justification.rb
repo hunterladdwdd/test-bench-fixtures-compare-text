@@ -17,7 +17,7 @@ context "Insert Line Numbers" do
     Line 10
     TEXT
 
-    numbered_text = CompareText::InsertLineNumbers.(text)
+    numbered_text = CompareText::InsertLineNumbers.(text, false)
     comment "Line Numbers Inserted:", numbered_text
 
     test do
