@@ -4,8 +4,8 @@ context "Insert Line Numbers" do
   text = Controls::Text.example
   comment "Text:", text
 
-  instance = CompareText::InsertLineNumbers.new(text)
-  numbered_text = instance.()
+  insert_line_numbers = CompareText::InsertLineNumbers.new(text)
+  numbered_text = insert_line_numbers.()
 
   comment "Line Numbers Inserted:", numbered_text
 
