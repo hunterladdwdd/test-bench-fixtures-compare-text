@@ -1,3 +1,5 @@
+require 'tempfile'
+
 def test(diff)
   puts <<~TEXT
 
