@@ -2,8 +2,6 @@ require_relative '../automated_init'
 
 context "Insert Line Numbers" do
   context "Line Number Justification" do
-    max_line_numbers = 10
-
     text = <<~TEXT
     Line 1
     Line 2
@@ -17,7 +15,9 @@ context "Insert Line Numbers" do
     Line 10
     TEXT
 
-    numbered_text = CompareText::InsertLineNumbers.(text, style: false)
+    instance = CompareText::InsertLineNumbers.new(text)
+    numbered_text = instance.()
+
     comment "Line Numbers Inserted:", numbered_text
 
     test do

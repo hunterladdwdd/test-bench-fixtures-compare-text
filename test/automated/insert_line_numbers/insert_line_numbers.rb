@@ -5,7 +5,7 @@ context "Insert Line Numbers" do
   comment "Text:", text
 
   instance = CompareText::InsertLineNumbers.new(text)
-  numbered_text = instance.call
+  numbered_text = instance.()
 
   comment "Line Numbers Inserted:", numbered_text
 

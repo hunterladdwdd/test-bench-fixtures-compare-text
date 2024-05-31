@@ -13,13 +13,18 @@ module TestBench
           @text = text
         end
 
-        def self.call(text, style: nil)
+        def self.build(text, style: nil)
           if style.nil?
             style = Defaults.style
           end
 
-          instance = InsertLineNumbers.new(text)
+          instance = self.new(text)
           instance.style = style
+          instance
+        end
+
+        def self.call(text, style: nil)
+          instance = build(text, style: style)
           instance.()
         end
 
