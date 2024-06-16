@@ -14,6 +14,7 @@ Gem::Specification.new do |s|
   s.files = Dir.glob 'lib/**/*'
 
   s.add_runtime_dependency 'test_bench-fixture'
+  s.add_runtime_dependency 'evt-initializer'
 
   s.add_development_dependency 'test_bench'
 end
