@@ -5,20 +5,43 @@ module TestBench
         class GitDiff
           include Initializer
 
+          def style
+            @style ||= false
+          end
+          attr_writer :style
+
           initializer :text, :different_text
+
+          def self.build(text, different_text, style: nil)
+            if style.nil?
+              style = Defaults.style
+            end
+
+            instance = self.new(text, different_text)
+            instance.style = style
+            instance
+          end
+
+          def self.call(text, different_text, style: nil)
+            instance = build(text, different_text, style: style)
+            instance.()
+          end
 
           def call
             control_path = write_tempfile(text, 'control')
             compare_path = write_tempfile(different_text, 'compare')
 
             ## Replace static value 111 with value appropriate for input texts
-            diff_command = "git diff --unified=111 --color --word-diff #{control_path} #{compare_path}"
+            if style
+              diff_command = "git diff --unified=111 --color --word-diff #{control_path} #{compare_path}"
+            else
+              diff_command = "git diff --unified=111 --word-diff #{control_path} #{compare_path}"
+            end
 
-            diff_output = run_command(diff_command)
+            raw_diff_output = run_command(diff_command)
 
-            formatted_diff = format_diff(diff_output)
-
-            formatted_diff
+            diff_output = format_diff(raw_diff_output)
+            diff_output
           end
 
           def write_tempfile(text, prefix)
