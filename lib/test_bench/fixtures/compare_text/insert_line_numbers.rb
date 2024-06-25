@@ -2,16 +2,14 @@ module TestBench
   module Fixtures
     class CompareText
       class InsertLineNumbers
-        attr_reader :text
+        include Initializer
 
         def style
           @style ||= false
         end
         attr_writer :style
 
-        def initialize(text)
-          @text = text
-        end
+        initializer :text
 
         def self.build(text, style: nil)
           if style.nil?
@@ -48,12 +46,6 @@ module TestBench
           end
 
           numbered_text
-        end
-
-        module Defaults
-          def self.style
-            true
-          end
         end
       end
     end
