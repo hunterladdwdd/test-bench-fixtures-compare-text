@@ -31,6 +31,10 @@ module TestBench
             control_path = write_tempfile(text, 'control')
             compare_path = write_tempfile(different_text, 'compare')
 
+            # text_line_count = text.lines.count
+            # different_line_count = different_text.lines.count
+            # line_count = [text_line_count, different_line_count].max
+
             ## Replace static value 111 with value appropriate for input texts
             if style
               diff_command = "git diff --unified=111 --color --word-diff #{control_path} #{compare_path}"
