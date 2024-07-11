@@ -1,5 +1,5 @@
 require 'tempfile'
-require './test/test_init'
+require_relative '../test/test_init'
 
 def write_tempfile(text, prefix)
   prefix = "#{prefix}-"
@@ -11,17 +11,9 @@ def write_tempfile(text, prefix)
   tempfile.path
 end
 
-text = 'text'
+text = Controls::Text::ContextLines.example
 
-100.times do |i|
-  text << "Line #{i + 1}\n"
-end
-
-different_text = ''
-
-100.times do |i|
-  different_text << "Line #{i + 1}\n"
-end
+different_text = Controls::Text::ContextLines::Difference.example
 
 compare_path = write_tempfile(text, 'compare')
 control_path = write_tempfile(different_text, 'control')
