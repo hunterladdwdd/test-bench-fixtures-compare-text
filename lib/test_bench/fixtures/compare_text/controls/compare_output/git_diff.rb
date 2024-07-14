@@ -23,20 +23,10 @@ module TestBench
             end
 
             module ContextLines
-              def self.example
-                <<~TEXT
-                {+Some Difference+} Line 1
-                Line 2
-                Line 3
-                Line 4
-                Line 5
-                Line 6
-                Line 7
-                Line 8
-                Line 9
-                Line 10
-                Line 11
-                TEXT
+              def self.example(lines: nil)
+                different_text = '{+Some Difference+} '
+
+                Controls::Text::ContextLines::Difference.example(different_text, lines:)
               end
             end
           end

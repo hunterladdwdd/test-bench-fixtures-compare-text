@@ -4,7 +4,7 @@ module TestBench
       module Controls
         module Text
           module ContextLines
-            def self.example(lines=nil)
+            def self.example(lines: nil)
               lines ||= self.lines
 
               text = ''
@@ -21,10 +21,10 @@ module TestBench
             end
 
             module Difference
-              def self.example(lines=nil)
-                different_text = 'Some Difference '
+              def self.example(different_text=nil, lines: nil)
+                different_text ||= 'Some Difference '
 
-                context_lines_text = ContextLines.example(lines)
+                context_lines_text = ContextLines.example(lines:)
 
                 different_text + context_lines_text
               end
