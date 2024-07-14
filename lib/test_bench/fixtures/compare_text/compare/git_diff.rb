@@ -31,16 +31,16 @@ module TestBench
             control_path = write_tempfile(text, 'control')
             compare_path = write_tempfile(different_text, 'compare')
 
-            # text_line_count = text.lines.count
-            # different_line_count = different_text.lines.count
-            # line_count = [text_line_count, different_line_count].max
+            # Largest value that git diff accepts
+            context_lines = (2 ** 31) - 1
 
-            ## Replace static value 111 with value appropriate for input texts
+            diff_command = "git diff --unified=#{context_lines} --word-diff"
+
             if style
-              diff_command = "git diff --unified=111 --color --word-diff #{control_path} #{compare_path}"
-            else
-              diff_command = "git diff --unified=111 --word-diff #{control_path} #{compare_path}"
+              diff_command << ' --color'
             end
+
+            diff_command << " #{control_path} #{compare_path}"
 
             raw_diff_output = run_command(diff_command)
 
